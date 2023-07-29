@@ -56,13 +56,14 @@ pub fn display(bm: u64) {
     for x in (0..8).rev() {
         for y in 0..8 {
             if bm & 1 << (x * 8 + y) != 0 {
-                print!("\u{2588}");
+                print!("\u{1f7e6}"); // blue
             } else {
-                print!(" ");
+                print!("\u{1f7e8}"); // yellow
             }
         }
         println!()
     }
+    println!()
 }
 
 pub const FONT: [u64; 606] = [
