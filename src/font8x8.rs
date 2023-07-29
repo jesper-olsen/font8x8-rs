@@ -4,9 +4,12 @@
 // https://github.com/dhepper/font8x8
 
 pub const UNICODE_ALL: std::ops::Range<u16> = 0x00..0xe55a;
+pub const UNICODE_ASCII: std::ops::Range<u16> = 0x0..0x7f;
 pub const UNICODE_LATIN: std::ops::Range<u16> = 0x00..0xff;
 pub const UNICODE_GREEK: std::ops::Range<u16> = 0x390..0x3c9;
 pub const UNICODE_HIRAGANA: std::ops::Range<u16> = 0x3040..0x309f;
+pub const UNICODE_SGA: std::ops::Range<u16> = 0xe541..0xe55a;
+pub const UNICODE_BOX: std::ops::Range<u16> = 0x2500..0x259f;
 
 pub fn index2unicode(x: usize) -> Option<usize> {
     match x {

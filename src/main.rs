@@ -24,6 +24,9 @@ fn main() {
         "latin" => font8x8::UNICODE_LATIN,
         "greek" => font8x8::UNICODE_GREEK,
         "hiragana" => font8x8::UNICODE_HIRAGANA,
+        "sga" => font8x8::UNICODE_SGA,
+        "ascii" => font8x8::UNICODE_ASCII,
+        "box" => font8x8::UNICODE_BOX,
         _ => font8x8::UNICODE_ALL,
     };
     for u in range {
