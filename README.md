@@ -1,5 +1,4 @@
 font8x8 - rust package with 8x8 bitmaps for 606 unicode characters (space+527 non-blank bitmaps).
-
 Includes bitmaps for Ascii, Latin, Greek, Hiragana as some purely graphical codepoints.
 
 Run the bin to display bitmaps - sort by unicode value or bitmap 'intensity'.
