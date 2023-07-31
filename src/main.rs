@@ -11,11 +11,11 @@ struct Args {
     ///sort by #pixels set
     s: bool,
     #[arg(short, long, default_value_t = String::from("latin"))]
-    ///all/ascii/latin/greek/hiragana/box/sga
-    u: String,
-    #[arg(short, long, default_value_t = String::from(""))]
-    ///rank chars by brightness
+    ///range all/ascii/latin/greek/hiragana/box/sga
     r: String,
+    #[arg(short, long, default_value_t = String::from(""))]
+    ///each char in string
+    u: String,
 }
 
 fn main() {
@@ -23,14 +23,14 @@ fn main() {
 
     let mut heap = BinaryHeap::new();
 
-    if args.r.len() > 0 {
+    if args.u.len() > 0 {
         for c in args.r.chars() {
             let u = c as u16;
             let b = font8x8::unicode2bitmap(u);
             heap.push(Reverse((b.count_ones(), c, u)));
         }
     } else {
-        args.u
+        args.r
             .split(",")
             .into_iter()
             .map(|s| match s {
