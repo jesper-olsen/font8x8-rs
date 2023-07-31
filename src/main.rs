@@ -11,8 +11,11 @@ struct Args {
     ///sort by #pixels set
     s: bool,
     #[arg(short, long, default_value_t = String::from("latin"))]
-    ///all/latin/greek/hiragana
+    ///all/ascii/latin/greek/hiragana/box/sga
     u: String,
+    #[arg(short, long, default_value_t = String::from(""))]
+    ///rank chars by brightness
+    r: String,
 }
 
 fn main() {
@@ -20,29 +23,44 @@ fn main() {
 
     let mut heap = BinaryHeap::new();
 
-    let range = match args.u.as_str() {
-        "latin" => font8x8::UNICODE_LATIN,
-        "greek" => font8x8::UNICODE_GREEK,
-        "hiragana" => font8x8::UNICODE_HIRAGANA,
-        "sga" => font8x8::UNICODE_SGA,
-        "ascii" => font8x8::UNICODE_ASCII,
-        "box" => font8x8::UNICODE_BOX,
-        _ => font8x8::UNICODE_ALL,
-    };
-    for u in range {
-        let b = font8x8::unicode2bitmap(u);
-        if u == 0x20 || b != 0x0 {
-            let c = char::from_u32(u.into()).unwrap();
-            if args.s {
-                heap.push(Reverse((b.count_ones(), c, u)));
-            } else {
-                heap.push(Reverse((u.into(), c, u)));
-            }
+    if args.r.len() > 0 {
+        for c in args.r.chars() {
+            let u = c as u16;
+            let b = font8x8::unicode2bitmap(u);
+            heap.push(Reverse((b.count_ones(), c, u)));
         }
+    } else {
+        args.u
+            .split(",")
+            .into_iter()
+            .map(|s| match s {
+                "latin" => font8x8::UNICODE_LATIN,
+                "greek" => font8x8::UNICODE_GREEK,
+                "hiragana" => font8x8::UNICODE_HIRAGANA,
+                "sga" => font8x8::UNICODE_SGA,
+                "ascii" => font8x8::UNICODE_ASCII,
+                "box" => font8x8::UNICODE_BOX,
+                "all" => font8x8::UNICODE_ALL,
+                _ => 1..0,
+            })
+            .for_each(|range| {
+                for u in range {
+                    let b = font8x8::unicode2bitmap(u);
+                    if u == 0x20 || b != 0x0 {
+                        let c = char::from_u32(u.into()).unwrap();
+                        if args.s {
+                            heap.push(Reverse((b.count_ones(), c, u)));
+                        } else {
+                            heap.push(Reverse((u.into(), c, u)));
+                        }
+                    }
+                }
+            })
     }
 
     let mut n = 0;
     let n_all = heap.len();
+    let mut s = String::new();
     while !heap.is_empty() {
         if let Some(Reverse((_, c, u))) = heap.pop() {
             n += 1;
@@ -52,6 +70,8 @@ fn main() {
                 b.count_ones()
             );
             font8x8::display(b);
+            s.push(c);
         }
     }
+    println!("{s}");
 }
