@@ -24,7 +24,7 @@ fn main() {
     let mut heap = BinaryHeap::new();
 
     if args.u.len() > 0 {
-        for c in args.r.chars() {
+        for c in args.u.chars() {
             let u = c as u16;
             let b = font8x8::unicode2bitmap(u);
             heap.push(Reverse((b.count_ones(), c, u)));
