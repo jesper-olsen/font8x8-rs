@@ -1,4 +1,3 @@
-pub mod font8x8;
 use std::cmp::Reverse;
 use std::collections::BinaryHeap;
 
@@ -48,11 +47,11 @@ fn main() {
                     let b = font8x8::unicode2bitmap(u);
                     if u == 0x20 || b != 0x0 {
                         let c = char::from_u32(u.into()).unwrap();
-                        if args.s {
-                            heap.push(Reverse((b.count_ones(), c, u)));
+                        heap.push(Reverse(if args.s {
+                            (b.count_ones(), c, u)
                         } else {
-                            heap.push(Reverse((u.into(), c, u)));
-                        }
+                            (u.into(), c, u)
+                        }));
                     }
                 }
             })

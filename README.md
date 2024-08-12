@@ -1,9 +1,9 @@
-font8x8 - rust package with 8x8 bitmaps for 606 unicode characters (space+527 non-blank bitmaps).
+font8x8 - rust library with 8x8 bitmaps for 606 unicode characters (space+527 non-blank bitmaps).
 Includes bitmaps for Ascii, Latin, Greek, Hiragana as well box drawing characters.
 
 Run the bin to display bitmaps - sort by unicode value or bitmap 'intensity'.
 ```
-% cargo run -- -u all
+% cargo run --bin main -- -u all
 
 1/528: Unicode 0x20: ' '; bits: 0/64
 🟨🟨🟨🟨🟨🟨🟨🟨
