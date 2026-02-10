@@ -8,10 +8,10 @@ pub const UNICODE_ASCII: std::ops::Range<u16> = 0x0..0x7f;
 pub const UNICODE_LATIN: std::ops::Range<u16> = 0x00..0xff;
 pub const UNICODE_GREEK: std::ops::Range<u16> = 0x390..0x3c9;
 pub const UNICODE_HIRAGANA: std::ops::Range<u16> = 0x3040..0x309f;
-pub const UNICODE_SGA: std::ops::Range<u16> = 0xe541..0xe55a;
+pub const UNICODE_SGA: std::ops::Range<u16> = 0xe541..0xe55a; // SGA (Standard Galactic Alphabet)
 pub const UNICODE_BOX: std::ops::Range<u16> = 0x2500..0x259f;
 
-pub fn index2unicode(x: usize) -> Option<usize> {
+fn _index2unicode(x: usize) -> Option<usize> {
     match x {
         0x0..=0xff => Some(x), // latin
         0x100..=0x100 => Some(0x92 + x),
@@ -23,7 +23,7 @@ pub fn index2unicode(x: usize) -> Option<usize> {
         0x141..=0x141 => Some(0x21cf + x),
         0x142..=0x1e1 => Some(0x23be + x), // box
         0x1e2..=0x241 => Some(0x2e5e + x), // hiragana
-        0x242..=0x25b => Some(0xe2ff + x), // SGA
+        0x242..=0x25b => Some(0xe2ff + x), // SGA (Standard Galactic Alphabet)
         604 => Some(0x00aa),               // duplicate unicode bitmap
         605 => Some(0x00ba),               // duplicate unicode bitmap
         _ => None,
