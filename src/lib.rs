@@ -13,7 +13,7 @@ pub const UNICODE_BOX: std::ops::Range<u16> = 0x2500..0x259f;
 
 pub fn index2unicode(x: usize) -> Option<usize> {
     match x {
-        0x0..=0xff => Some(0x0 + x), // latin
+        0x0..=0xff => Some(x), // latin
         0x100..=0x100 => Some(0x92 + x),
         0x101..=0x101 => Some(0x1ff + x),
         0x102..=0x13b => Some(0x28e + x), // greek
@@ -30,7 +30,7 @@ pub fn index2unicode(x: usize) -> Option<usize> {
     }
 }
 
-pub fn unicode2index(x: usize) -> Option<usize> {
+fn unicode2index(x: usize) -> Option<usize> {
     match x {
         0x0..=0xff => Some(x), // latin
         0x192..=0x192 => Some(x - 0x92),
@@ -49,7 +49,7 @@ pub fn unicode2index(x: usize) -> Option<usize> {
 
 pub fn unicode2bitmap(y: u16) -> u64 {
     if let Some(i) = unicode2index(y.into()) {
-        FONT[i as usize]
+        FONT[i]
     } else {
         0x0
     }
@@ -175,9 +175,9 @@ pub const FONT: [u64; 606] = [
     0x00001E303E336E00, // U+0061 (a)
     0x0706063E66663B00, // U+0062 (b)
     0x00001E3303331E00, // U+0063 (c)
-    0x3830303e33336E00, // U+0064 (d)
-    0x00001E333f031E00, // U+0065 (e)
-    0x1C36060f06060F00, // U+0066 (f)
+    0x3830303E33336E00, // U+0064 (d)
+    0x00001E333F031E00, // U+0065 (e)
+    0x1C36060F06060F00, // U+0066 (f)
     0x00006E33333E301F, // U+0067 (g)
     0x0706366E66666700, // U+0068 (h)
     0x0C000E0C0C0C1E00, // U+0069 (i)
