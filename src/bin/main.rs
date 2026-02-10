@@ -25,8 +25,11 @@ fn main() {
     if !args.symbols.is_empty() {
         for c in args.symbols.chars() {
             let u = c as u16;
-            let b = font8x8::unicode2bitmap(u);
-            heap.push(Reverse((b.count_ones(), c, u)));
+            if let Some(b) = font8x8::unicode2bitmap(u) {
+                heap.push(Reverse((b.count_ones(), c, u)));
+            } else {
+                println!("No bitmap for symbol: {u}");
+            }
         }
     } else {
         args.range
@@ -43,8 +46,9 @@ fn main() {
             })
             .for_each(|range| {
                 for u in range {
-                    let b = font8x8::unicode2bitmap(u);
-                    if u == 0x20 || b != 0x0 {
+                    if let Some(b) = font8x8::unicode2bitmap(u)
+                        && (u == 0x20 || b != 0x0)
+                    {
                         let c = char::from_u32(u.into()).unwrap();
                         heap.push(Reverse(if args.pixels {
                             (b.count_ones(), c, u)
@@ -61,13 +65,16 @@ fn main() {
     let mut s = String::new();
     while let Some(Reverse((_, c, u))) = heap.pop() {
         n += 1;
-        let b = font8x8::unicode2bitmap(u);
-        println!(
-            "{n}/{n_all}: Unicode 0x{u:x}: '{c}'; bits: {}/64",
-            b.count_ones()
-        );
-        font8x8::display(b);
-        s.push(c);
+        if let Some(b) = font8x8::unicode2bitmap(u) {
+            println!(
+                "{n}/{n_all}: Unicode 0x{u:x}: '{c}'; bits: {}/64",
+                b.count_ones()
+            );
+            font8x8::display(b);
+            s.push(c);
+        } else {
+            println!("{n}/{n_all}: Unicode 0x{u:x}: '{c}'; missing",);
+        }
     }
     println!("{s}");
 }

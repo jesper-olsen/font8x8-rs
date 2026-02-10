@@ -47,11 +47,11 @@ fn unicode2index(x: usize) -> Option<usize> {
     }
 }
 
-pub fn unicode2bitmap(y: u16) -> u64 {
+pub fn unicode2bitmap(y: u16) -> Option<u64> {
     if let Some(i) = unicode2index(y.into()) {
-        FONT[i]
+        Some(FONT[i])
     } else {
-        0x0
+        None
     }
 }
 
