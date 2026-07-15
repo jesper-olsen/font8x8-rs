@@ -5289,6 +5289,7 @@ Run the bin to display bitmaps - sort by unicode value or bitmap 'intensity'.
 
 Credits:
 
+```
 ; Summary: `font8x8.h`
 ; 8x8 monochrome bitmap fonts for rendering
 ;
@@ -5296,12 +5297,14 @@ Credits:
 ;
 ; Author: Daniel Hepper <daniel@hepper.net>
 ; License: Public Domain
+```
 
 These header files are directly derived from an assembler file fetched from:
 http://dimensionalrift.homelinux.net/combuster/mos3/?p=viewsource&file=/modules/gfx/font8_8.asm
 
 Original header:
 
+```
 ; Summary: font8_8.asm
 ; 8x8 monochrome bitmap fonts for rendering
 ;
@@ -5312,4 +5315,4 @@ Original header:
 ; License:
 ;     Public Domain
 ;
-
+```
