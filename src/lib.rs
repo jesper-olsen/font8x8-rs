@@ -48,11 +48,7 @@ fn unicode2index(x: usize) -> Option<usize> {
 }
 
 pub fn unicode2bitmap(y: u16) -> Option<u64> {
-    if let Some(i) = unicode2index(y.into()) {
-        Some(FONT[i])
-    } else {
-        None
-    }
+    unicode2index(y.into()).map(|i| FONT[i])
 }
 
 pub fn display(bm: u64) {
@@ -60,14 +56,9 @@ pub fn display(bm: u64) {
     let yellow = "\u{1f7e8}";
     for x in (0..8).rev() {
         for y in 0..8 {
-            print!(
-                "{}",
-                if bm & 1 << (x * 8 + y) != 0 {
-                    blue
-                } else {
-                    yellow
-                }
-            );
+            let flag = bm & 1 << (x * 8 + y) != 0;
+            let colour = if flag { blue } else { yellow };
+            print!("{colour}");
         }
         println!()
     }
